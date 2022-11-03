@@ -1,0 +1,29 @@
+{% extends 'master/master.html' %}
+
+{% block title %} Home page {% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            {% for b in blogs %}
+            <div class="card" style="margin-top:15px;">
+                <img src="{{MEDIA_URL}}{{b.image.url}}" class="card-img-top" alt="..." style="height:300px;width:auto;">
+                <div class="card-body">
+                    <h5 class="card-title">{{b.title}}</h5>
+                    <p class="card-text">{{b.content|truncatewords:20}}</p>
+                    <a href="{% url 'details' b.id %}" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+
+        <div class="col-4">
+
+        </div>
+    </div>
+</div>
+{% endblock %}
