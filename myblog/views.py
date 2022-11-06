@@ -3,6 +3,7 @@ from blog.models import Blog
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login,authenticate,logout
+from comment.models import Comment
 def home(request):
     blogs = Blog.objects.all() #select * from blogs
     context = {
@@ -12,8 +13,10 @@ def home(request):
 
 def details(request,id):
     blog = Blog.objects.get(pk=id)
+    comments = Comment.objects.filter(blog_id=id)
     context = {
-        'blog':blog
+        'blog':blog,
+        'comments':comments
     }
     return render(request,'details.html',context)
 
@@ -60,3 +63,14 @@ def dashboard(request):
 def signout(request):
     logout(request)
     return redirect('signin')
+
+
+def commentStore(request,id):
+    if request.method == 'POST':
+        msg = request.POST['msg']
+        c = Comment(comment_msg=msg,user=request.user,blog_id=id)
+        c.save()
+        messages.add_message(request,messages.SUCCESS,"Commented successfully")
+    else:
+        messages.add_message(request,messages.ERROR,"wrong reqeust")
+    return redirect('details', id)

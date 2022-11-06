@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import home, details, signup, signin, dashboard,signout
+from .views import home, details, signup, signin, dashboard, signout, commentStore
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -12,4 +12,5 @@ urlpatterns = [
                   path('signin/', signin, name='signin'),
                   path('signout/', signout, name='signout'),
                   path('dashboard/', dashboard, name='dashboard'),
+                  path('comment/<int:id>', commentStore, name='comment')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

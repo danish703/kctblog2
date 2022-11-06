@@ -13,6 +13,17 @@
             <p>
                 {{blog.content}}
             </p>
+            <hr/>
+            <div>
+                {% for c in comments %}
+                  <h5>{{c.user}}</h5>
+                   <p>
+                       {{c.comment_msg}}
+                   </p>
+                <hr/>
+                {% endfor %}
+            </div>
+            {% include 'partials/commentform.html' %}
         </div>
         <div class="col-4">
 
